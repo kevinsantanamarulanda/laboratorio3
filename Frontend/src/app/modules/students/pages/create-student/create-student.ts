@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,15 +23,16 @@ export class CreateStudent {
   private studentService = inject(StudentService);
 
   semesters = Array.from({ length: 10 }, (_, i) => i + 1);
+  maxBirthdate = new Date().toISOString().slice(0, 10);
 
   studentForm = this.fb.group({
-    id: ['', [Validators.required]],
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    phone: ['', Validators.required],
-    address: ['', Validators.required],
+    id: ['', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]],
+    name: ['', [Validators.required, Validators.maxLength(100)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
+    phone: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+    address: ['', [Validators.required, Validators.maxLength(150)]],
     birthdate: ['', Validators.required],
-    semester: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+    semester: ['', [Validators.required, Validators.min(1), Validators.max(10), Validators.pattern(/^\d+$/)]],
     status: [true]
   });
 
@@ -58,8 +60,9 @@ export class CreateStudent {
         );
         this.router.navigateByUrl('/students');
       },
-      error: () => {
-        this.alertService.toast('Error al crear el estudiante', 'error');
+      error: (error: HttpErrorResponse) => {
+        const message = error.error?.error ?? 'Error al crear el estudiante';
+        this.alertService.toast(message, 'error');
       }
     })
 

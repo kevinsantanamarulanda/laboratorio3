@@ -18,15 +18,15 @@ INSERT INTO students (
 
 (1005, 'Andres Lopez', 'andres.lopez@gmail.com', '3045678901', 'Calle 30 # 20-15', '2002-03-18', 4, TRUE),
 
-(1006, 'Daniela Ramirez', 'daniela.ramirez@gmail.com', '3056789012', 'Carrera 12 # 5-18', '2001-06-25', 6, FALSE),
+(1006, 'Daniela Ramirez', 'daniela.ramirez@gmail.com', '3056789012', 'Carrera 12 # 5-18', '2001-06-25', 6, TRUE),
 
-(1007, 'Santiago Torres', 'santiago.torres@gmail.com', '3107890123', 'Calle 18 # 22-10', '2003-09-12', 1, FALSE),
+(1007, 'Santiago Torres', 'santiago.torres@gmail.com', '3107890123', 'Calle 18 # 22-10', '2003-09-12', 1, TRUE),
 
-(1008, 'Valentina Hernandez', 'valentina.hernandez@gmail.com', '3118901234', 'Carrera 8 # 14-32', '2002-12-05', 8, FALSE),
+(1008, 'Valentina Hernandez', 'valentina.hernandez@gmail.com', '3118901234', 'Carrera 8 # 14-32', '2002-12-05', 8, TRUE),
 
-(1009, 'Sebastian Castro', 'sebastian.castro@gmail.com', '3129012345', 'Calle 40 # 18-22', '2001-04-14', 9, FALSE),
+(1009, 'Sebastian Castro', 'sebastian.castro@gmail.com', '3129012345', 'Calle 40 # 18-22', '2001-04-14', 9, TRUE),
 
-(1010, 'Camila Moreno', 'camila.moreno@gmail.com', '3130123456', 'Carrera 25 # 30-12', '2000-07-20', 10, FALSE);
+(1010, 'Camila Moreno', 'camila.moreno@gmail.com', '3130123456', 'Carrera 25 # 30-12', '2000-07-20', 10, TRUE);
 
 INSERT INTO courses (
     name,
@@ -54,3 +54,15 @@ INSERT INTO courses (
 ('Desarrollo de Aplicaciones Móviles', 'Fundamentos y desarrollo de aplicaciones para dispositivos móviles.', 3, 7, TRUE),
 
 ('Inteligencia Artificial', 'Fundamentos de inteligencia artificial, aprendizaje automático y algoritmos inteligentes.', 4, 8, TRUE);
+
+INSERT INTO teachers (name, email, phone, specialty, status) VALUES
+('Ana Maria Restrepo', 'ana.restrepo@uceva.edu.co', '3151234567', 'Ingenieria de Software', TRUE),
+('Carlos Andres Valencia', 'carlos.valencia@uceva.edu.co', '3162345678', 'Bases de Datos', TRUE),
+('Diana Marcela Rios', 'diana.rios@uceva.edu.co', '3173456789', 'Matematicas', TRUE)
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO classrooms (code, building, capacity, type, status) VALUES
+('A-101', 'Bloque A', 35, 'Aula', TRUE),
+('L-201', 'Bloque B', 25, 'Laboratorio', TRUE),
+('AU-001', 'Auditorio principal', 200, 'Auditorio', TRUE)
+ON CONFLICT (code) DO NOTHING;

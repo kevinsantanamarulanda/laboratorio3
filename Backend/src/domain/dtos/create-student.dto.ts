@@ -32,7 +32,7 @@ export class CreateStudentDTO {
     if (!address) return ["Missing address"];
     if (!birthdate) return ["Missing birthdate"];
     if (!semester) return ["Missing semester"];
-    if (status === null || status === undefined) return ["Missing status"];
+    if (typeof status !== "boolean") return ["Invalid status"];
 
     if (name && name.length > 100)
       return ["name is too large, max length is 100 characters"];
@@ -51,9 +51,6 @@ export class CreateStudentDTO {
 
     if (semester && (semester < 1 || semester > 10))
       return ["Invalid semester"];
-
-    if (typeof status !== "boolean")
-      return ["Invalid status"];
 
     //Crear DTO
     return [

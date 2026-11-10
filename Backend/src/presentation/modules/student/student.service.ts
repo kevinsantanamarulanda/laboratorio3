@@ -19,7 +19,7 @@ export class StudentService {
     public async createStudent(student: CreateStudent): Promise<Student> {
         const existingStudent = await this.getStudentById(student.id);
         if(existingStudent) {
-            throw CustomError.internalServer(`Ya existe un estudiante con ese id`);
+            throw CustomError.conflict(`Ya existe un estudiante con ese id`);
         }
         const sql = `
             INSERT INTO students (
@@ -45,11 +45,23 @@ export class StudentService {
             student.semester,
             student.status
         ];
-        const studentCreated = (await pool.query<Student>(sql, values)).rows[0];
-        if(!studentCreated) {
-            throw CustomError.internalServer(`No se pudo crear el estudiante`);
+        try {
+            const studentCreated = (await pool.query<Student>(sql, values)).rows[0];
+            if(!studentCreated) {
+                throw CustomError.internalServer(`No se pudo crear el estudiante`);
+            }
+            return studentCreated;
+        } catch (error) {
+            if (
+                typeof error === "object" &&
+                error !== null &&
+                "code" in error &&
+                error.code === "23505"
+            ) {
+                throw CustomError.conflict("El correo o teléfono ya está registrado");
+            }
+            throw error;
         }
-        return studentCreated;
     }
 
     public async updateStudent(

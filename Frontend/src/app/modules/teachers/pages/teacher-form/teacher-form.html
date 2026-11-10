@@ -1,0 +1,58 @@
+<div class="container py-4">
+  <button class="btn btn-link px-0 mb-3" type="button" (click)="goToList()">
+    <i class="bi bi-arrow-left me-2"></i>Volver a docentes
+  </button>
+  <div class="mb-4">
+    <h2 class="fw-bold mb-1">{{ isEditing ? 'Editar docente' : 'Registrar docente' }}</h2>
+    <p class="text-muted mb-0">Completa los datos del docente.</p>
+  </div>
+
+  <div class="card border">
+    <div class="card-body p-4">
+      <form [formGroup]="teacherForm" (ngSubmit)="saveTeacher()">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="teacher-name" class="form-label">Nombre completo *</label>
+            <input id="teacher-name" class="form-control" formControlName="name" maxlength="100">
+            @if (teacherForm.controls.name.touched && teacherForm.controls.name.invalid) {
+              <small class="text-danger">Ingresa el nombre (máximo 100 caracteres).</small>
+            }
+          </div>
+          <div class="col-md-6">
+            <label for="teacher-email" class="form-label">Correo electrónico *</label>
+            <input id="teacher-email" type="email" class="form-control" formControlName="email" maxlength="150">
+            @if (teacherForm.controls.email.touched && teacherForm.controls.email.invalid) {
+              <small class="text-danger">Ingresa un correo electrónico válido.</small>
+            }
+          </div>
+          <div class="col-md-6">
+            <label for="teacher-phone" class="form-label">Teléfono *</label>
+            <input id="teacher-phone" type="tel" class="form-control" formControlName="phone" maxlength="15">
+            @if (teacherForm.controls.phone.touched && teacherForm.controls.phone.invalid) {
+              <small class="text-danger">Ingresa entre 7 y 15 dígitos.</small>
+            }
+          </div>
+          <div class="col-md-6">
+            <label for="teacher-specialty" class="form-label">Especialidad *</label>
+            <input id="teacher-specialty" class="form-control" formControlName="specialty" maxlength="100">
+            @if (teacherForm.controls.specialty.touched && teacherForm.controls.specialty.invalid) {
+              <small class="text-danger">La especialidad es obligatoria (máximo 100 caracteres).</small>
+            }
+          </div>
+          <div class="col-12">
+            <div class="form-check form-switch">
+              <input id="teacher-status" class="form-check-input" type="checkbox" formControlName="status">
+              <label class="form-check-label" for="teacher-status">Docente activo</label>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button class="btn btn-outline-secondary" type="button" (click)="goToList()">Cancelar</button>
+          <button class="btn btn-primary" type="submit" [disabled]="teacherForm.invalid">
+            {{ isEditing ? 'Guardar cambios' : 'Registrar docente' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

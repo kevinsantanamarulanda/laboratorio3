@@ -1,0 +1,30 @@
+<div class="container py-4">
+  <button class="btn btn-link px-0 mb-3" type="button" (click)="goToList()">
+    <i class="bi bi-arrow-left me-2"></i>Volver a salones
+  </button>
+  @if (classroom; as item) {
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <h2 class="fw-bold mb-1">Salón {{ item.code }}</h2>
+        <p class="text-muted mb-0">Detalle del salón #{{ item.id }}</p>
+      </div>
+      <button class="btn btn-outline-warning" type="button" (click)="editClassroom()">
+        <i class="bi bi-pencil-square me-2"></i>Editar
+      </button>
+    </div>
+    <div class="card border">
+      <div class="card-body p-4">
+        <dl class="row mb-0">
+          <dt class="col-sm-4 mb-2">Código</dt><dd class="col-sm-8 mb-3">{{ item.code }}</dd>
+          <dt class="col-sm-4 mb-2">Edificio</dt><dd class="col-sm-8 mb-3">{{ item.building }}</dd>
+          <dt class="col-sm-4 mb-2">Capacidad</dt><dd class="col-sm-8 mb-3">{{ item.capacity }} personas</dd>
+          <dt class="col-sm-4 mb-2">Tipo</dt><dd class="col-sm-8 mb-3">{{ item.type }}</dd>
+          <dt class="col-sm-4 mb-2">Estado</dt>
+          <dd class="col-sm-8 mb-0">{{ item.status ? 'Activo' : 'Inactivo' }}</dd>
+        </dl>
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-info">Cargando información del salón...</div>
+  }
+</div>
